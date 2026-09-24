@@ -4,7 +4,10 @@
       eyebrow="LGPD"
       :titulo="politica.titulo"
       :subtitulo="`Transparência sobre como tratamos os seus dados pessoais, conforme a ${lgpd.lei}.`"
-      :itens="[{ title: 'Início', to: '/' }, { title: 'Política de Privacidade', disabled: true }]"
+      :itens="[
+        { title: 'Início', to: '/' },
+        { title: 'Política de Privacidade', disabled: true },
+      ]"
     >
       <v-chip class="mt-6" color="secondary" variant="tonal" prepend-icon="mdi-update">
         Última atualização: {{ politica.atualizadoEm }}
@@ -60,10 +63,20 @@
                 </v-card>
 
                 <div class="d-flex flex-wrap ga-3 mt-8">
-                  <v-btn variant="tonal" color="primary" to="/contato" prepend-icon="mdi-message-text-outline">
+                  <v-btn
+                    variant="tonal"
+                    color="primary"
+                    to="/contato"
+                    prepend-icon="mdi-message-text-outline"
+                  >
                     Falar com a central
                   </v-btn>
-                  <v-btn variant="text" color="primary" @click="voltar" prepend-icon="mdi-arrow-left">
+                  <v-btn
+                    variant="text"
+                    color="primary"
+                    @click="voltar"
+                    prepend-icon="mdi-arrow-left"
+                  >
                     Voltar
                   </v-btn>
                 </div>

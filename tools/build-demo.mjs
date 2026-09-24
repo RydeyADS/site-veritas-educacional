@@ -19,7 +19,7 @@ console.log('› build single-file (DEMO_SINGLE=1)')
 execSync('npm run build', {
   cwd: raiz,
   stdio: 'inherit',
-  env: { ...process.env, DEMO_SINGLE: '1' }
+  env: { ...process.env, DEMO_SINGLE: '1' },
 })
 
 let html = fs.readFileSync(arquivoFinal, 'utf8')
@@ -41,7 +41,9 @@ const lerAsset = (ref) => {
 const referencias = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
   .map((m) => m[1])
   .filter((ref) => !ref.startsWith('data:') && !ref.startsWith('#') && !ref.startsWith('http'))
-const sobras = referencias.filter((ref) => ![linkCss[1], tagJs[1]].includes(ref) && !ref.endsWith('favicon.svg'))
+const sobras = referencias.filter(
+  (ref) => ![linkCss[1], tagJs[1]].includes(ref) && !ref.endsWith('favicon.svg')
+)
 if (sobras.length) {
   throw new Error(`a demo depende de arquivos externos: ${sobras.join(', ')}`)
 }
@@ -63,12 +65,16 @@ css = css.replace(
 const economia = antesFonte - css.length
 
 // Trava de segurança: sobrou algum formato legado da fonte?
-const legados = css.match(/data:(?:application\/vnd\.ms-fontobject|font\/woff|font\/ttf)(?=;)/g) || []
+const legados =
+  css.match(/data:(?:application\/vnd\.ms-fontobject|font\/woff|font\/ttf)(?=;)/g) || []
 if (legados.length) {
   throw new Error(`formatos de fonte não removidos: ${[...new Set(legados)].join(', ')}`)
 }
 
-html = html.replace(linkCss[0], () => `<style>\n${css.replace(/<\/style/gi, '<\\/style')}\n</style>`)
+html = html.replace(
+  linkCss[0],
+  () => `<style>\n${css.replace(/<\/style/gi, '<\\/style')}\n</style>`
+)
 html = html.replace(
   tagJs[0],
   () => `<script type="module">\n${js.replace(/<\/script/gi, '<\\/script')}\n</script>`

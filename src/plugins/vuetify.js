@@ -6,7 +6,7 @@ import { pt } from 'vuetify/locale'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
-const kairosTheme = {
+const veritasTheme = {
   dark: false,
   colors: {
     background: '#F6F7FB',
@@ -19,8 +19,8 @@ const kairosTheme = {
     error: '#D32F2F',
     info: '#0277BD',
     success: '#2E7D32',
-    warning: '#ED6C02'
-  }
+    warning: '#ED6C02',
+  },
 }
 
 export default createVuetify({
@@ -28,15 +28,15 @@ export default createVuetify({
   directives,
   locale: {
     locale: 'pt',
-    messages: { pt }
+    messages: { pt },
   },
   theme: {
-    defaultTheme: 'kairos',
-    themes: { kairos: kairosTheme }
+    defaultTheme: 'veritas',
+    themes: { veritas: veritasTheme },
   },
   defaults: {
     VBtn: { rounded: 'lg', elevation: 0 },
     VCard: { rounded: 'xl' },
-    VChip: { rounded: 'lg' }
-  }
+    VChip: { rounded: 'lg' },
+  },
 })

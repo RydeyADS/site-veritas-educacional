@@ -10,18 +10,30 @@
       <v-container>
         <v-card class="cookie-card" elevation="16">
           <v-card-text class="pa-5 pa-md-6 d-flex flex-column flex-lg-row align-lg-center ga-4">
-            <v-icon icon="mdi-cookie-outline" color="secondary" size="34" class="cookie-banner__icon" />
+            <v-icon
+              icon="mdi-cookie-outline"
+              color="secondary"
+              size="34"
+              class="cookie-banner__icon"
+            />
             <div class="flex-grow-1">
               <div class="font-weight-bold mb-1">Nós usamos cookies</div>
               <p class="text-body-2 text-medium-emphasis mb-0">
-                Utilizamos cookies essenciais para o funcionamento do site e cookies de desempenho para entender como
-                você navega. Você pode aceitar todos ou manter apenas os essenciais. Saiba mais na
-                <router-link to="/politica-privacidade" class="cookie-banner__link">Política de Privacidade</router-link>.
+                Utilizamos cookies essenciais para o funcionamento do site e cookies de desempenho
+                para entender como você navega. Você pode aceitar todos ou manter apenas os
+                essenciais. Saiba mais na
+                <router-link to="/politica-privacidade" class="cookie-banner__link"
+                  >Política de Privacidade</router-link
+                >.
               </p>
             </div>
             <div class="d-flex flex-column flex-sm-row ga-2 cookie-banner__actions">
-              <v-btn variant="tonal" color="primary" @click="aceitarEssenciais">Somente essenciais</v-btn>
-              <v-btn color="secondary" prepend-icon="mdi-check" @click="aceitarTodos">Aceitar todos</v-btn>
+              <v-btn variant="tonal" color="primary" @click="aceitarEssenciais"
+                >Somente essenciais</v-btn
+              >
+              <v-btn color="secondary" prepend-icon="mdi-check" @click="aceitarTodos"
+                >Aceitar todos</v-btn
+              >
             </div>
           </v-card-text>
         </v-card>
@@ -79,7 +91,9 @@ const { visivel, aceitarTodos, aceitarEssenciais } = useCookieConsent()
 
 .cookie-slide-enter-active,
 .cookie-slide-leave-active {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .cookie-slide-enter-from,

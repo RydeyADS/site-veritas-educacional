@@ -4,10 +4,12 @@
       <v-row>
         <v-col cols="12" md="4">
           <div class="d-flex align-center mb-4">
-            <span class="brand__mark"><v-icon icon="mdi-school" size="26" /></span>
+            <BrandLogo :size="44" />
             <div class="ml-3">
               <strong>{{ instituicao.nome }}</strong>
-              <div class="text-caption footer__muted">{{ instituicao.sigla }} · desde {{ instituicao.fundacao }}</div>
+              <div class="text-caption footer__muted">
+                {{ instituicao.sigla }} · desde {{ instituicao.fundacao }}
+              </div>
             </div>
           </div>
           <p class="footer__muted pr-md-8">{{ instituicao.descricao }}</p>
@@ -29,18 +31,28 @@
         <v-col cols="6" md="2">
           <h4 class="footer__title">Navegue</h4>
           <ul class="footer__list">
-            <li v-for="item in navegacao" :key="item.rota">
-              <router-link :to="item.rota">{{ item.titulo }}</router-link>
-            </li>
+            <template v-for="item in navegacao" :key="item.url || item.rota">
+              <li v-if="item.externo">
+                <a :href="item.url" target="_blank" rel="noopener">{{ item.titulo }}</a>
+              </li>
+              <li v-else>
+                <router-link :to="item.rota">{{ item.titulo }}</router-link>
+              </li>
+            </template>
           </ul>
         </v-col>
 
         <v-col cols="6" md="3">
-          <h4 class="footer__title">Frentes de conhecimento</h4>
+          <h4 class="footer__title">Institucional</h4>
           <ul class="footer__list">
-            <li v-for="frente in frentes" :key="frente.slug">
-              <router-link :to="`/cursos#${frente.slug}`">{{ frente.titulo }}</router-link>
+            <li>
+              <a :href="cursosLink.url" target="_blank" rel="noopener"
+                >Consultar cursos e valores</a
+              >
             </li>
+            <li><router-link to="/campus">Campus</router-link></li>
+            <li><router-link to="/redes-sociais">Redes sociais</router-link></li>
+            <li><router-link to="/politica-privacidade">Política de Privacidade</router-link></li>
           </ul>
         </v-col>
 
@@ -48,9 +60,13 @@
           <h4 class="footer__title">Atendimento</h4>
           <ul class="footer__list footer__list--plain">
             <li><v-icon icon="mdi-phone-outline" size="16" /> {{ contato.telefone }}</li>
-            <li><v-icon icon="mdi-whatsapp" size="16" /> {{ contato.whatsapp }}</li>
-            <li><v-icon icon="mdi-email-outline" size="16" /> {{ contato.email }}</li>
             <li><v-icon icon="mdi-clock-outline" size="16" /> {{ contato.central }}</li>
+            <li>
+              <v-icon icon="mdi-open-in-new" size="16" />
+              <a :href="cursosLink.url" target="_blank" rel="noopener"
+                >Cursos e valores no portal externo</a
+              >
+            </li>
           </ul>
         </v-col>
       </v-row>
@@ -66,7 +82,12 @@
       </div>
 
       <div class="lgpd-info mb-6">
-        <v-icon icon="mdi-shield-lock-outline" color="secondary" size="18" class="lgpd-info__icon" />
+        <v-icon
+          icon="mdi-shield-lock-outline"
+          color="secondary"
+          size="18"
+          class="lgpd-info__icon"
+        />
         <div class="lgpd-info__text">
           <p class="text-caption footer__muted mb-2">{{ lgpd.aviso }}</p>
           <div class="d-flex flex-wrap ga-2">
@@ -105,9 +126,17 @@
 </template>
 
 <script setup>
-import { frentes } from '@/data/frentes'
 import { useCookieConsent } from '@/composables/useCookieConsent'
-import { contato, empresa, instituicao, lgpd, navegacao, redesSociais } from '@/data/site'
+import BrandLogo from '@/components/BrandLogo.vue'
+import {
+  contato,
+  cursosLink,
+  empresa,
+  instituicao,
+  lgpd,
+  navegacao,
+  redesSociais,
+} from '@/data/site'
 
 const ano = new Date().getFullYear()
 const { reabrir } = useCookieConsent()
@@ -207,15 +236,5 @@ const { reabrir } = useCookieConsent()
 .lgpd-info__text {
   line-height: 1.65;
   flex-grow: 1;
-}
-
-.brand__mark {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: rgba(242, 160, 7, 0.18);
-  color: #f2a007;
 }
 </style>

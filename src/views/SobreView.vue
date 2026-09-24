@@ -4,11 +4,21 @@
       eyebrow="Sobre nós"
       :titulo="`${instituicao.nome}: ensino com prática e propósito`"
       :subtitulo="instituicao.descricao"
-      :itens="[{ title: 'Início', to: '/' }, { title: 'Sobre nós', disabled: true }]"
+      :itens="[
+        { title: 'Início', to: '/' },
+        { title: 'Sobre nós', disabled: true },
+      ]"
     />
+
+    <!-- NOVO: Como atuamos (gestão do polo Estácio) -->
+    <ModeloAtuacao />
 
     <section class="page">
       <v-container>
+        <div class="text-center mb-10">
+          <p class="eyebrow text-secondary mb-2">Nossa essência</p>
+          <h2 class="section-title">Missão, visão e valores</h2>
+        </div>
         <v-row>
           <v-col cols="12" md="4">
             <v-card class="soft-card h-100" variant="flat">
@@ -34,7 +44,13 @@
                 <v-icon icon="mdi-handshake-outline" color="primary" size="30" class="mb-3" />
                 <h2 class="text-subtitle-1 font-weight-bold mb-2">Valores</h2>
                 <div class="d-flex flex-wrap ga-2 mt-3">
-                  <v-chip v-for="valor in instituicao.valores" :key="valor" size="small" color="secondary" variant="tonal">
+                  <v-chip
+                    v-for="valor in instituicao.valores"
+                    :key="valor"
+                    size="small"
+                    color="secondary"
+                    variant="tonal"
+                  >
                     {{ valor }}
                   </v-chip>
                 </div>
@@ -53,43 +69,18 @@
           <h2 class="section-title">Informações da empresa</h2>
         </div>
 
-        <v-card class="soft-card company-card" variant="flat">
+        <v-card class="soft-card" variant="flat">
           <v-card-text class="pa-6 pa-md-10">
             <v-row>
               <v-col cols="12" md="7">
-                <div class="company-row">
-                  <v-icon icon="mdi-storefront-outline" color="primary" size="22" />
-                  <div>
-                    <div class="company-row__label">Nome fantasia</div>
-                    <div class="company-row__value">{{ empresa.nomeFantasia }}</div>
-                  </div>
-                </div>
-                <div class="company-row">
-                  <v-icon icon="mdi-domain" color="primary" size="22" />
-                  <div>
-                    <div class="company-row__label">Razão social</div>
-                    <div class="company-row__value">{{ empresa.razaoSocial }}</div>
-                  </div>
-                </div>
-                <div class="company-row">
-                  <v-icon icon="mdi-card-account-details-outline" color="primary" size="22" />
-                  <div>
-                    <div class="company-row__label">CNPJ</div>
-                    <div class="company-row__value">{{ empresa.cnpj }}</div>
-                  </div>
-                </div>
-                <div class="company-row">
-                  <v-icon icon="mdi-map-marker-outline" color="primary" size="22" />
-                  <div>
-                    <div class="company-row__label">Endereço da sede</div>
-                    <div class="company-row__value">{{ empresa.endereco }}</div>
-                  </div>
-                </div>
-                <div class="company-row">
-                  <v-icon icon="mdi-calendar-star" color="primary" size="22" />
-                  <div>
-                    <div class="company-row__label">Data de fundação</div>
-                    <div class="company-row__value">{{ empresa.fundacao }}</div>
+                <div v-for="item in dadosEmpresa" :key="item.rotulo" class="company-item">
+                  <v-avatar color="primary" variant="tonal" size="42">
+                    <v-icon :icon="item.icone" size="22" />
+                  </v-avatar>
+                  <div class="company-item__texto">
+                    <div class="text-caption text-medium-emphasis">{{ item.rotulo }}</div>
+                    <a v-if="item.link" class="company-item__link" :href="item.link">{{ item.valor }}</a>
+                    <div v-else class="company-item__valor">{{ item.valor }}</div>
                   </div>
                 </div>
               </v-col>
@@ -124,18 +115,24 @@
             <p class="eyebrow text-secondary mb-2">Nossa trajetória</p>
             <h2 class="section-title mb-4">Uma instituição jovem, com ambição grande</h2>
             <p class="prose">
-              A {{ instituicao.nome }} foi constituída em {{ empresa.fundacao }}, em Fortaleza (CE), pelos fundadores
-              {{ empresa.fundadores.map((f) => f.nome).join(' e ') }}.
+              A {{ instituicao.nome }} foi constituída em {{ empresa.fundacao }}, em Ipu (CE), pelos
+              fundadores {{ empresa.fundadores.map((f) => f.nome).join(' e ') }}.
             </p>
             <p class="prose">
-              O nosso jeito de ensinar nasceu de uma constatação simples: aprender de verdade exige prática. Por isso,
-              organizamos a instituição em frentes de conhecimento, cada uma com laboratórios, parcerias e projetos que
-              colocam o estudante diante de problemas reais desde o início do curso.
+              O nosso jeito de ensinar nasceu de uma constatação simples: aprender de verdade exige
+              prática. Ao assumir a operação do polo Estácio, unimos a qualidade acadêmica da
+              faculdade à força de uma gestão local próxima, com laboratórios, parcerias e projetos
+              que colocam o estudante diante de problemas reais desde o início do curso.
             </p>
           </v-col>
           <v-col cols="12" md="6">
             <v-timeline side="end" density="compact">
-              <v-timeline-item v-for="marco in linhaDoTempo" :key="marco.ano" color="primary" size="small">
+              <v-timeline-item
+                v-for="marco in linhaDoTempo"
+                :key="marco.titulo"
+                color="primary"
+                size="small"
+              >
                 <div class="text-caption font-weight-bold text-secondary">{{ marco.ano }}</div>
                 <div class="font-weight-medium">{{ marco.titulo }}</div>
                 <div class="text-body-2 text-medium-emphasis">{{ marco.texto }}</div>
@@ -173,7 +170,8 @@
 <script setup>
 import CtaBanner from '@/components/CtaBanner.vue'
 import PageHero from '@/components/PageHero.vue'
-import { diferenciais, empresa, instituicao } from '@/data/site'
+import ModeloAtuacao from '@/components/ModeloAtuacao.vue'
+import { contato, diferenciais, empresa, instituicao } from '@/data/site'
 
 function iniciais(nome) {
   return nome
@@ -186,39 +184,74 @@ function iniciais(nome) {
 }
 
 const linhaDoTempo = [
-  { ano: '2025', titulo: 'Fundação', texto: `Constituição da ${empresa.razaoSocial}, em Fortaleza (CE), em ${empresa.fundacao}.` },
-  { ano: '2025', titulo: 'Estruturação', texto: 'Definição das cinco frentes de conhecimento e dos primeiros cursos.' },
-  { ano: '2026', titulo: 'Operação', texto: 'Início das turmas, parcerias com empresas e projetos de extensão.' }
+  {
+    ano: '2025',
+    titulo: 'Fundação',
+    texto: `Constituição da ${empresa.razaoSocial}, em Ipu (CE), em ${empresa.fundacao}.`,
+  },
+  {
+    ano: '2025',
+    titulo: 'Estruturação',
+    texto: 'Definição das áreas de conhecimento e dos primeiros cursos.',
+  },
+  {
+    ano: '2025',
+    titulo: 'Aquisição',
+    texto: 'Compra da operação do polo Estácio, com transição da estrutura, equipe e atendimento.',
+  },
+  {
+    ano: '2026',
+    titulo: 'Operação',
+    texto: 'Início das turmas, parcerias com empresas e projetos de extensão.',
+  },
+]
+
+const dadosEmpresa = [
+  { icone: 'mdi-storefront-outline', rotulo: 'Nome fantasia', valor: empresa.nomeFantasia },
+  { icone: 'mdi-domain', rotulo: 'Razão social', valor: empresa.razaoSocial },
+  { icone: 'mdi-card-account-details-outline', rotulo: 'CNPJ', valor: empresa.cnpj },
+  { icone: 'mdi-map-marker-outline', rotulo: 'Endereço da sede', valor: empresa.endereco },
+  { icone: 'mdi-calendar-star', rotulo: 'Data de fundação', valor: empresa.fundacao },
+  { icone: 'mdi-handshake-outline', rotulo: 'Modelo de atuação', valor: empresa.modeloAtuacao },
+  { icone: 'mdi-phone-outline', rotulo: 'Telefone', valor: contato.telefone, link: contato.telefoneLink },
+  { icone: 'mdi-email-outline', rotulo: 'E-mail', valor: contato.email, link: contato.emailLink },
 ]
 </script>
 
 <style scoped>
-.company-card {
-  border-top: 5px solid rgb(var(--v-theme-secondary));
-}
-
-.company-row {
+.company-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 14px;
-  padding: 14px 0;
+  padding: 10px 8px;
+  margin: 0 -8px;
+  border-radius: 12px;
 }
 
-.company-row + .company-row {
+.company-item + .company-item {
   border-top: 1px solid rgba(11, 42, 91, 0.07);
 }
 
-.company-row__label {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #90a4ae;
+.company-item__texto {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
-.company-row__value {
-  font-size: 1.02rem;
-  font-weight: 600;
+.company-item__valor {
+  font-weight: 500;
   color: #0b2a5b;
+}
+
+.company-item__link {
+  font-weight: 500;
+  color: #0b2a5b;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.company-item__link:hover {
+  color: rgb(var(--v-theme-secondary));
+  text-decoration: underline;
 }
 
 .founder-card {

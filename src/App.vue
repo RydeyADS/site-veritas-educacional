@@ -9,7 +9,6 @@
       </router-view>
     </v-main>
     <AppFooter />
-    <FloatingWhatsApp />
     <CookieConsent />
   </v-app>
 </template>
@@ -18,7 +17,6 @@
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import CookieConsent from '@/components/CookieConsent.vue'
-import FloatingWhatsApp from '@/components/FloatingWhatsApp.vue'
 </script>
 
 <style>

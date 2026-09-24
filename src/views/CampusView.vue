@@ -3,8 +3,11 @@
     <PageHero
       eyebrow="Estrutura"
       titulo="Nossos Campos"
-      subtitulo="Três campi equipados com laboratórios, biblioteca, espaços de convivência e atendimento ao estudante."
-      :itens="[{ title: 'Início', to: '/' }, { title: 'Campus', disabled: true }]"
+      subtitulo="Campus equipado com laboratórios, biblioteca, espaços de convivência e atendimento ao estudante."
+      :itens="[
+        { title: 'Início', to: '/' },
+        { title: 'Campus', disabled: true },
+      ]"
     />
 
     <section class="page">
@@ -17,32 +20,51 @@
                   <v-avatar color="primary" variant="tonal" size="46">
                     <v-icon icon="mdi-office-building-outline" size="24" />
                   </v-avatar>
-                  <v-chip v-if="unidade.destaque" size="small" color="secondary" variant="tonal">Sede</v-chip>
+                  <v-chip v-if="unidade.destaque" size="small" color="secondary" variant="tonal"
+                    >Sede</v-chip
+                  >
                 </div>
 
                 <h2 class="text-h6 font-weight-bold mb-1">{{ unidade.nome }}</h2>
                 <p class="text-body-2 text-medium-emphasis mb-4">{{ unidade.cidade }}</p>
 
                 <div class="unidade-info">
-                  <span><v-icon icon="mdi-map-marker-outline" size="18" /> {{ unidade.endereco }}</span>
+                  <span
+                    ><v-icon icon="mdi-map-marker-outline" size="18" /> {{ unidade.endereco }}</span
+                  >
                   <span><v-icon icon="mdi-phone-outline" size="18" /> {{ unidade.telefone }}</span>
                   <span><v-icon icon="mdi-clock-outline" size="18" /> {{ unidade.horario }}</span>
                 </div>
 
                 <v-divider class="my-5" />
 
-                <h3 class="text-caption font-weight-bold text-uppercase mb-2" style="letter-spacing: 0.12em">
+                <h3
+                  class="text-caption font-weight-bold text-uppercase mb-2"
+                  style="letter-spacing: 0.12em"
+                >
                   Infraestrutura
                 </h3>
                 <div class="d-flex flex-wrap ga-2">
-                  <v-chip v-for="item in unidade.estrutura" :key="item" size="small" variant="tonal" color="primary">
+                  <v-chip
+                    v-for="item in unidade.estrutura"
+                    :key="item"
+                    size="small"
+                    variant="tonal"
+                    color="primary"
+                  >
                     {{ item }}
                   </v-chip>
                 </div>
               </v-card-text>
 
               <v-card-actions class="px-6 pb-6 pt-0">
-                <v-btn color="primary" variant="tonal" block :to="'/contato'" prepend-icon="mdi-map-outline">
+                <v-btn
+                  color="primary"
+                  variant="tonal"
+                  block
+                  to="/contato"
+                  prepend-icon="mdi-map-outline"
+                >
                   Agendar visita
                 </v-btn>
               </v-card-actions>
@@ -59,8 +81,8 @@
             <p class="eyebrow text-secondary mb-2">Estrutura acadêmica</p>
             <h2 class="section-title mb-4">Espaços que apoiam o seu aprendizado</h2>
             <p class="text-medium-emphasis">
-              Além das salas de aula, os campi contam com ambientes especializados por frente de conhecimento,
-              biblioteca com acervo físico e digital, e espaços de convivência.
+              Além das salas de aula, o campus conta com ambientes especializados por área de
+              conhecimento, biblioteca com acervo físico e digital, e espaços de convivência.
             </p>
           </v-col>
           <v-col cols="12" md="7">
@@ -93,10 +115,26 @@ import PageHero from '@/components/PageHero.vue'
 import { unidades } from '@/data/site'
 
 const espacos = [
-  { titulo: 'Biblioteca', icone: 'mdi-bookshelf', texto: 'Acervo físico e digital, salas de estudo e apoio à pesquisa.' },
-  { titulo: 'Laboratórios', icone: 'mdi-flask-outline', texto: 'Ambientes por frente: informática, saúde, engenharia e maker.' },
-  { titulo: 'Clínicas-escola', icone: 'mdi-hospital-box-outline', texto: 'Atendimento gratuito à comunidade e prática supervisionada.' },
-  { titulo: 'Espaços de convivência', icone: 'mdi-sofa-outline', texto: 'Áreas de descanso, cantina e coworking para projetos.' }
+  {
+    titulo: 'Biblioteca',
+    icone: 'mdi-bookshelf',
+    texto: 'Acervo físico e digital, salas de estudo e apoio à pesquisa.',
+  },
+  {
+    titulo: 'Laboratórios',
+    icone: 'mdi-flask-outline',
+    texto: 'Ambientes por área: informática, saúde, gestão e maker.',
+  },
+  {
+    titulo: 'Clínicas-escola',
+    icone: 'mdi-hospital-box-outline',
+    texto: 'Atendimento gratuito à comunidade e prática supervisionada.',
+  },
+  {
+    titulo: 'Espaços de convivência',
+    icone: 'mdi-sofa-outline',
+    texto: 'Áreas de descanso, cantina e coworking para projetos.',
+  },
 ]
 </script>
 

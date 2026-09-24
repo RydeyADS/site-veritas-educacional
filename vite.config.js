@@ -9,23 +9,20 @@ import vuetify from 'vite-plugin-vuetify'
 const demoUnico = process.env.DEMO_SINGLE === '1'
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    vuetify({ autoImport: true })
-  ],
+  plugins: [vue(), vuetify({ autoImport: true })],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
   // Lido pelo router para escolher entre histórico web e hash.
   define: {
-    __DEMO_SINGLE__: JSON.stringify(demoUnico)
+    __DEMO_SINGLE__: JSON.stringify(demoUnico),
   },
   base: demoUnico ? './' : '/',
   server: {
     port: 5173,
-    open: true
+    open: true,
   },
   build: demoUnico
     ? {
@@ -37,9 +34,9 @@ export default defineConfig({
         rollupOptions: {
           output: {
             // Sem chunks separados: o HTML único não consegue buscar arquivos irmãos.
-            inlineDynamicImports: true
-          }
-        }
+            inlineDynamicImports: true,
+          },
+        },
       }
-    : undefined
+    : undefined,
 })

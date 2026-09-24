@@ -4,16 +4,32 @@
       <p class="not-found__code">404</p>
       <h1 class="section-title mb-3">Página não encontrada</h1>
       <p class="text-medium-emphasis mb-8 mx-auto" style="max-width: 52ch">
-        O endereço acessado não existe ou foi movido. Use os atalhos abaixo para continuar navegando.
+        O endereço acessado não existe ou foi movido. Use os atalhos abaixo para continuar
+        navegando.
       </p>
       <div class="d-flex flex-wrap justify-center ga-3">
-        <v-btn color="primary" size="large" to="/" prepend-icon="mdi-home-variant">Voltar ao início</v-btn>
-        <v-btn variant="tonal" color="primary" size="large" to="/cursos">Ver cursos</v-btn>
+        <v-btn color="primary" size="large" to="/" prepend-icon="mdi-home-variant"
+          >Voltar ao início</v-btn
+        >
+        <v-btn
+          variant="tonal"
+          color="primary"
+          size="large"
+          :href="cursosLink.url"
+          target="_blank"
+          rel="noopener"
+        >
+          Ver cursos
+        </v-btn>
         <v-btn variant="tonal" color="primary" size="large" to="/contato">Falar com a gente</v-btn>
       </div>
     </v-container>
   </section>
 </template>
+
+<script setup>
+import { cursosLink } from '@/data/site'
+</script>
 
 <style scoped>
 .not-found {
