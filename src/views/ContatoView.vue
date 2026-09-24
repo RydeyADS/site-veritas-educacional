@@ -4,119 +4,17 @@
       eyebrow="Fale com a gente"
       titulo="Vamos conversar sobre o seu futuro"
       subtitulo="Tire dúvidas sobre cursos, bolsas, transferência e processos seletivos. Nossa equipe responde em até um dia útil."
-      :itens="[{ title: 'Início', to: '/' }, { title: 'Contato', disabled: true }]"
+      :itens="[
+        { title: 'Início', to: '/' },
+        { title: 'Contato', disabled: true },
+      ]"
     />
 
     <section class="page">
       <v-container>
-        <v-row>
-          <v-col cols="12" lg="7">
+        <v-row justify="center">
+          <v-col cols="12" md="6">
             <v-card class="soft-card" variant="flat">
-              <v-card-text class="pa-6 pa-md-8">
-                <h2 class="text-h5 font-weight-bold mb-1">Envie sua mensagem</h2>
-                <p class="text-body-2 text-medium-emphasis mb-6">
-                  Preencha o formulário e receba o retorno de um consultor educacional. Ao enviar, abrimos
-                  o WhatsApp com a sua mensagem já preenchida.
-                </p>
-
-                <v-alert
-                  v-if="sucesso"
-                  type="success"
-                  variant="tonal"
-                  density="comfortable"
-                  class="mb-6"
-                  closable
-                  @click:close="sucesso = false"
-                >
-                  Estamos te levando para o WhatsApp! Conclua o envio por lá para falar com um consultor.
-                </v-alert>
-
-                <v-form v-model="valido" @submit.prevent="enviar">
-                  <v-row dense>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="form.nome"
-                        label="Nome completo"
-                        variant="outlined"
-                        :rules="[regras.obrigatorio]"
-                      />
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="form.email"
-                        label="E-mail"
-                        type="email"
-                        variant="outlined"
-                        :rules="[regras.obrigatorio, regras.email]"
-                      />
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="form.telefone"
-                        label="Telefone / WhatsApp"
-                        variant="outlined"
-                        :rules="[regras.obrigatorio]"
-                      />
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-select
-                        v-model="form.curso"
-                        :items="opcoesCurso"
-                        label="Curso de interesse"
-                        variant="outlined"
-                        :rules="[regras.obrigatorio]"
-                      />
-                    </v-col>
-                    <v-col cols="12">
-                      <v-select
-                        v-model="form.assunto"
-                        :items="assuntos"
-                        label="Assunto"
-                        variant="outlined"
-                        :rules="[regras.obrigatorio]"
-                      />
-                    </v-col>
-                    <v-col cols="12">
-                      <v-textarea
-                        v-model="form.mensagem"
-                        label="Como podemos ajudar?"
-                        variant="outlined"
-                        rows="4"
-                        :rules="[regras.obrigatorio]"
-                      />
-                    </v-col>
-                  </v-row>
-
-                  <v-checkbox
-                    v-model="form.aceite"
-                    :rules="[regras.aceite]"
-                    color="primary"
-                    density="comfortable"
-                  >
-                    <template #label>
-                      <span class="text-body-2">
-                        Autorizo o contato e concordo com o uso dos meus dados conforme a LGPD.
-                      </span>
-                    </template>
-                  </v-checkbox>
-
-                  <v-btn
-                    type="submit"
-                    color="secondary"
-                    size="large"
-                    class="mt-2"
-                    :loading="enviando"
-                    prepend-icon="mdi-whatsapp"
-                  >
-                    Enviar pelo WhatsApp
-                  </v-btn>
-                </v-form>
-              </v-card-text>
-            </v-card>
-          </v-col>
-
-          <v-col cols="12" lg="5">
-            <v-card class="soft-card mb-6" variant="flat">
               <v-card-text class="pa-6">
                 <h2 class="text-subtitle-1 font-weight-bold mb-1">Canais de atendimento</h2>
                 <p class="text-body-2 text-medium-emphasis mb-4">
@@ -142,7 +40,7 @@
               </v-card-text>
             </v-card>
 
-            <v-card class="soft-card mb-6" variant="flat">
+            <v-card class="soft-card mt-6" variant="flat">
               <v-card-text class="pa-6">
                 <h2 class="text-subtitle-1 font-weight-bold mb-4">Datas e processos</h2>
                 <div v-for="item in datasImportantes" :key="item.titulo" class="data-item">
@@ -151,8 +49,10 @@
                 </div>
               </v-card-text>
             </v-card>
+          </v-col>
 
-            <v-card class="soft-card" variant="flat">
+          <v-col cols="12" md="6">
+            <v-card class="soft-card h-100" variant="flat">
               <v-card-text class="pa-6">
                 <h2 class="text-subtitle-1 font-weight-bold mb-3">Perguntas frequentes</h2>
                 <v-expansion-panels variant="accordion">
@@ -170,39 +70,8 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
 import PageHero from '@/components/PageHero.vue'
-import { todosOsCursos } from '@/data/frentes'
-import { contato, datasImportantes } from '@/data/site'
-
-const valido = ref(false)
-const enviando = ref(false)
-const sucesso = ref(false)
-
-const form = reactive({
-  nome: '',
-  email: '',
-  telefone: '',
-  curso: null,
-  assunto: null,
-  mensagem: '',
-  aceite: false
-})
-
-const opcoesCurso = todosOsCursos.map((c) => c.nome)
-const assuntos = [
-  'Informações sobre cursos',
-  'Bolsas e descontos',
-  'Transferência e segunda graduação',
-  'Visita ao campus',
-  'Outro assunto'
-]
-
-const regras = {
-  obrigatorio: (v) => Boolean(v) || 'Campo obrigatório',
-  email: (v) => /.+@.+\..+/.test(v || '') || 'Informe um e-mail válido',
-  aceite: (v) => v === true || 'É necessário autorizar o contato'
-}
+import { contato, cursosLink, datasImportantes } from '@/data/site'
 
 const canais = [
   {
@@ -210,80 +79,46 @@ const canais = [
     valor: contato.telefone,
     icone: 'mdi-phone-outline',
     href: contato.telefoneLink,
-    externo: false
-  },
-  {
-    rotulo: 'WhatsApp',
-    valor: contato.whatsapp,
-    icone: 'mdi-whatsapp',
-    href: contato.whatsappLink,
-    externo: true
-  },
-  {
-    rotulo: 'E-mail',
-    valor: contato.email,
-    icone: 'mdi-email-outline',
-    href: contato.emailLink,
-    externo: false
+    externo: false,
   },
   {
     rotulo: 'Onde estamos',
     valor: contato.enderecoReitoria,
     icone: 'mdi-map-marker-outline',
     href: contato.mapaLink,
-    externo: true
-  }
+    externo: true,
+  },
+  {
+    rotulo: 'Cursos e valores',
+    valor: 'Consulte no portal oficial',
+    icone: 'mdi-open-in-new',
+    href: cursosLink.url,
+    externo: true,
+  },
 ]
 
 const faqs = [
   {
     pergunta: 'Como funciona o ingresso?',
-    resposta: 'Há inscrições abertas o ano todo, com ingresso imediato. Basta enviar seus dados e um consultor orienta a matrícula.'
+    resposta:
+      'Há inscrições abertas o ano todo, com ingresso imediato. Basta enviar seus dados e um consultor orienta a matrícula.',
   },
   {
     pergunta: 'Existem bolsas e descontos?',
-    resposta: 'Sim. A instituição oferece bolsas por desempenho, descontos para transferência e condições especiais para quem já é aluno.'
+    resposta:
+      'Sim. A instituição oferece bolsas por desempenho, descontos para transferência e condições especiais para quem já é aluno.',
   },
   {
     pergunta: 'Posso aproveitar disciplinas de outro curso?',
-    resposta: 'Análises de aproveitamento e transferência são feitas em até 5 dias úteis a partir do histórico enviado.'
+    resposta:
+      'Análises de aproveitamento e transferência são feitas em até 5 dias úteis a partir do histórico enviado.',
   },
   {
     pergunta: 'Os cursos são presenciais ou EAD?',
-    resposta: 'Existem as três modalidades: presencial, híbrida e EAD. A disponibilidade varia conforme o curso escolhido.'
-  }
+    resposta:
+      'Existem as três modalidades: presencial, híbrida e EAD. A disponibilidade varia conforme o curso escolhido.',
+  },
 ]
-
-function montarMensagem() {
-  const linhas = [
-    'Olá! Enviei uma mensagem pelo site da Kairos.',
-    '',
-    `*Nome:* ${form.nome}`,
-    `*E-mail:* ${form.email}`,
-    `*Telefone/WhatsApp:* ${form.telefone}`,
-    `*Curso de interesse:* ${form.curso}`,
-    `*Assunto:* ${form.assunto}`,
-    '',
-    `*Mensagem:* ${form.mensagem}`
-  ]
-  return linhas.join('\n')
-}
-
-async function enviar() {
-  if (!valido.value) return
-  enviando.value = true
-
-  const url = `${contato.whatsappLink}?text=${encodeURIComponent(montarMensagem())}`
-  const janela = window.open(url, '_blank')
-  // Se o navegador bloquear o pop-up, redireciona na mesma aba.
-  if (!janela) window.location.href = url
-
-  await new Promise((resolve) => setTimeout(resolve, 400))
-  enviando.value = false
-  sucesso.value = true
-  Object.assign(form, { nome: '', email: '', telefone: '', curso: null, assunto: null, mensagem: '', aceite: false })
-  valido.value = false
-}
 </script>
 
 <style scoped>
@@ -296,7 +131,9 @@ async function enviar() {
   border-radius: 12px;
   text-decoration: none;
   color: inherit;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .canal:hover {

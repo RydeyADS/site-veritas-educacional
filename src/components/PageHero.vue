@@ -25,7 +25,7 @@ defineProps({
   titulo: { type: String, required: true },
   subtitulo: { type: String, default: '' },
   eyebrow: { type: String, default: '' },
-  itens: { type: Array, default: () => [] }
+  itens: { type: Array, default: () => [] },
 })
 </script>
 

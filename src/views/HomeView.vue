@@ -5,21 +5,36 @@
       <v-container class="py-12 py-md-16">
         <v-row align="center">
           <v-col cols="12" lg="7">
-            <v-chip class="mb-5" color="secondary" variant="tonal" prepend-icon="mdi-star-four-points-outline">
+            <v-chip
+              class="mb-5"
+              color="secondary"
+              variant="tonal"
+              prepend-icon="mdi-star-four-points-outline"
+            >
               Inscrições abertas para 2027
             </v-chip>
             <h1 class="hero__title">
-              Formação prática, organizada por <span class="hero__highlight">frentes de conhecimento</span>.
+              Ensino superior com <span class="hero__highlight">ingresso o ano todo</span>.
             </h1>
             <p class="hero__text">
-              Na {{ instituicao.nome }}, você escolhe uma área, mergulha em projetos reais e sai preparado para o
-              mercado — com laboratórios, clínicas-escola e professores que atuam na prática.
+              Na {{ instituicao.nome }}, você escolhe sua graduação e estuda com prática,
+              laboratórios e professores que atuam no mercado — em modalidade EAD, no polo Nova
+              Aldeota, em Ipu (CE).
             </p>
             <div class="d-flex flex-wrap ga-3 mt-8">
-              <v-btn color="secondary" size="large" to="/cursos" prepend-icon="mdi-book-search-outline">
-                Explorar cursos
+              <v-btn
+                color="secondary"
+                size="large"
+                :href="cursosLink.url"
+                target="_blank"
+                rel="noopener"
+                prepend-icon="mdi-open-in-new"
+              >
+                Consultar cursos e valores
               </v-btn>
-              <v-btn variant="outlined" color="white" size="large" to="/sobre">Conhecer a faculdade</v-btn>
+              <v-btn variant="outlined" color="white" size="large" to="/sobre"
+                >Conhecer a faculdade</v-btn
+              >
             </div>
 
             <div class="hero__badges mt-10">
@@ -32,22 +47,34 @@
           <v-col cols="12" lg="5">
             <v-card class="hero__panel soft-card" elevation="8">
               <v-card-text class="pa-6">
-                <p class="eyebrow text-primary mb-3">Frentes de conhecimento</p>
-                <router-link
-                  v-for="frente in frentes"
-                  :key="frente.slug"
-                  :to="`/cursos#${frente.slug}`"
+                <p class="eyebrow text-primary mb-3">Áreas de conhecimento</p>
+                <a
+                  v-for="area in areas"
+                  :key="area.nome"
+                  :href="cursosLink.url"
+                  target="_blank"
+                  rel="noopener"
                   class="frente-row"
                 >
                   <v-avatar color="primary" size="40" variant="tonal">
-                    <v-icon :icon="frente.icone" size="20" />
+                    <v-icon :icon="area.icone" size="20" />
                   </v-avatar>
                   <div class="flex-grow-1">
-                    <div class="text-caption text-medium-emphasis">{{ frente.numero }}</div>
-                    <div class="font-weight-bold">{{ frente.titulo }}</div>
+                    <div class="font-weight-bold">{{ area.nome }}</div>
                   </div>
-                  <v-icon icon="mdi-chevron-right" />
-                </router-link>
+                  <v-icon icon="mdi-open-in-new" size="18" />
+                </a>
+                <v-btn
+                  class="mt-4"
+                  block
+                  color="primary"
+                  variant="tonal"
+                  :href="cursosLink.url"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Ver todos os cursos
+                </v-btn>
               </v-card-text>
             </v-card>
           </v-col>
@@ -70,38 +97,24 @@
       </v-container>
     </section>
 
-    <!-- FRENTES -->
-    <section class="page">
-      <v-container>
-        <div class="text-center mb-10">
-          <p class="eyebrow text-secondary mb-2">Como a faculdade se organiza</p>
-          <h2 class="section-title text-gradient">Cinco frentes, uma formação completa</h2>
-          <p class="mx-auto mt-4 text-medium-emphasis" style="max-width: 62ch">
-            Cada frente reúne cursos e competências de uma grande área. Navegue por elas para encontrar o caminho que
-            combina com o seu objetivo.
-          </p>
-        </div>
-
-        <v-row>
-          <v-col v-for="frente in frentes" :key="frente.slug" cols="12" md="6" lg="4">
-            <FrenteCard :frente="frente" />
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
     <!-- DIFERENCIAIS -->
     <section class="py-8 py-md-12 bg-white">
       <v-container>
         <v-row align="center">
           <v-col cols="12" md="5">
-            <p class="eyebrow text-secondary mb-2">Por que a Kairos</p>
+            <p class="eyebrow text-secondary mb-2">Por que a Veritas</p>
             <h2 class="section-title mb-4">Ferramentas para você aprender de verdade</h2>
             <p class="text-medium-emphasis">
-              Da primeira aula ao primeiro emprego, a faculdade trabalha para que o estudante tenha repertório,
-              apoio e experiência.
+              Da primeira aula ao primeiro emprego, a faculdade trabalha para que o estudante tenha
+              repertório, apoio e experiência.
             </p>
-            <v-btn class="mt-4" color="primary" to="/sobre" variant="tonal" append-icon="mdi-arrow-right">
+            <v-btn
+              class="mt-4"
+              color="primary"
+              to="/sobre"
+              variant="tonal"
+              append-icon="mdi-arrow-right"
+            >
               Nossa história
             </v-btn>
           </v-col>
@@ -126,7 +139,7 @@
     <section class="page">
       <v-container>
         <div class="text-center mb-10">
-          <p class="eyebrow text-secondary mb-2">Quem vive a Kairos</p>
+          <p class="eyebrow text-secondary mb-2">Quem vive a Veritas</p>
           <h2 class="section-title">Depoimentos de alunos e egressos</h2>
         </div>
         <v-row>
@@ -150,45 +163,23 @@
       </v-container>
     </section>
 
-    <!-- NOTÍCIAS -->
-    <section class="py-8 py-md-12 bg-white">
-      <v-container>
-        <div class="d-flex flex-wrap align-end justify-space-between mb-8 ga-4">
-          <div>
-            <p class="eyebrow text-secondary mb-2">Fique por dentro</p>
-            <h2 class="section-title">Últimas notícias</h2>
-          </div>
-          <v-btn variant="text" color="primary" to="/noticias" append-icon="mdi-arrow-right">Ver todas</v-btn>
-        </div>
-        <v-row>
-          <v-col v-for="noticia in noticias.slice(0, 3)" :key="noticia.slug" cols="12" md="4">
-            <v-card class="soft-card hover-lift h-100" variant="flat" :to="`/noticias/${noticia.slug}`">
-              <v-card-text class="pa-6">
-                <v-chip size="small" color="secondary" variant="tonal" class="mb-3">{{ noticia.categoria }}</v-chip>
-                <h3 class="text-subtitle-1 font-weight-bold mb-2">{{ noticia.titulo }}</h3>
-                <p class="text-body-2 text-medium-emphasis">{{ noticia.resumo }}</p>
-              </v-card-text>
-              <v-card-actions class="px-6 pb-6 pt-0">
-                <span class="text-caption text-medium-emphasis">{{ formatarData(noticia.data) }}</span>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-
     <CtaBanner />
   </div>
 </template>
 
 <script setup>
 import CtaBanner from '@/components/CtaBanner.vue'
-import FrenteCard from '@/components/FrenteCard.vue'
-import { frentes } from '@/data/frentes'
-import { depoimentos, diferenciais, instituicao, noticias, numeros } from '@/data/site'
-import { formatarData } from '@/utils/format'
+import { cursosLink, depoimentos, diferenciais, instituicao, numeros } from '@/data/site'
 
-const badges = ['Laboratórios e clínicas-escola', 'Bolsas e descontos', 'Ingresso o ano todo']
+const badges = ['Laboratórios', 'Bolsas e descontos', 'Ingresso o ano todo']
+
+const areas = [
+  { nome: 'Tecnologia e Inovação', icone: 'mdi-cpu-64-bit' },
+  { nome: 'Saúde e Bem-Estar', icone: 'mdi-heart-pulse' },
+  { nome: 'Gestão e Negócios', icone: 'mdi-chart-line' },
+  { nome: 'Educação e Humanidades', icone: 'mdi-school' },
+  { nome: 'Engenharias e Sustentabilidade', icone: 'mdi-factory' },
+]
 </script>
 
 <style scoped>

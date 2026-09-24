@@ -2,9 +2,7 @@
   <v-app-bar color="primary" flat height="72" class="app-bar">
     <v-container fluid class="navbar">
       <router-link to="/" class="brand" @click="drawer = false">
-        <span class="brand__mark">
-          <v-icon icon="mdi-school" size="26" />
-        </span>
+        <BrandLogo :size="42" />
         <span class="brand__text">
           <strong>{{ instituicao.nomeCurto }}</strong>
           <small>educacional</small>
@@ -12,22 +10,23 @@
       </router-link>
 
       <nav class="navbar__nav d-none d-lg-flex align-center" aria-label="Navegação principal">
-        <router-link
-          v-for="item in navegacao"
-          :key="item.rota"
-          :to="item.rota"
-          class="nav-link"
-          active-class="nav-link--active"
-        >
-          {{ item.titulo }}
-        </router-link>
+        <template v-for="item in navegacao" :key="item.url || item.rota">
+          <a v-if="item.externo" :href="item.url" target="_blank" rel="noopener" class="nav-link">
+            {{ item.titulo }}
+          </a>
+          <router-link v-else :to="item.rota" class="nav-link" active-class="nav-link--active">
+            {{ item.titulo }}
+          </router-link>
+        </template>
       </nav>
 
       <v-btn
         class="navbar__cta d-none d-lg-inline-flex"
         color="secondary"
         variant="flat"
-        to="/cursos"
+        :href="cursosLink.url"
+        target="_blank"
+        rel="noopener"
         prepend-icon="mdi-arrow-right-circle-outline"
       >
         Quero estudar aqui
@@ -50,9 +49,7 @@
     width="300"
   >
     <div class="drawer__topo">
-      <span class="brand__mark">
-        <v-icon icon="mdi-school" size="24" />
-      </span>
+      <BrandLogo :size="40" />
       <div class="brand__text">
         <strong>{{ instituicao.nomeCurto }}</strong>
         <small>educacional</small>
@@ -71,16 +68,28 @@
     <v-divider class="drawer__divisor" />
 
     <v-list nav class="py-2" aria-label="Navegação principal">
-      <v-list-item
-        v-for="item in navegacao"
-        :key="item.rota"
-        :to="item.rota"
-        :prepend-icon="item.icone"
-        :title="item.titulo"
-        rounded="lg"
-        class="drawer__item"
-        @click="drawer = false"
-      />
+      <template v-for="item in navegacao" :key="item.url || item.rota">
+        <v-list-item
+          v-if="item.externo"
+          :href="item.url"
+          target="_blank"
+          rel="noopener"
+          :prepend-icon="item.icone"
+          :title="item.titulo"
+          rounded="lg"
+          class="drawer__item"
+          @click="drawer = false"
+        />
+        <v-list-item
+          v-else
+          :to="item.rota"
+          :prepend-icon="item.icone"
+          :title="item.titulo"
+          rounded="lg"
+          class="drawer__item"
+          @click="drawer = false"
+        />
+      </template>
     </v-list>
 
     <div class="px-4 pb-6 pt-2">
@@ -91,7 +100,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import { instituicao, navegacao } from '@/data/site'
+import BrandLogo from '@/components/BrandLogo.vue'
+import { cursosLink, instituicao, navegacao } from '@/data/site'
 
 const drawer = ref(false)
 </script>
@@ -128,17 +138,6 @@ const drawer = ref(false)
   color: #fff;
 }
 
-.brand__mark {
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: rgba(242, 160, 7, 0.18);
-  color: #f2a007;
-  flex-shrink: 0;
-}
-
 .brand__text {
   display: flex;
   flex-direction: column;
@@ -167,7 +166,9 @@ const drawer = ref(false)
   font-size: 0.9rem;
   font-weight: 500;
   white-space: nowrap;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .nav-link:hover {

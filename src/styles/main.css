@@ -8,7 +8,12 @@
 
 body {
   margin: 0;
-  font-family: 'Roboto', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family:
+    'Roboto',
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    sans-serif;
   background: #f6f7fb;
   color: #14181f;
 }
@@ -52,7 +57,9 @@ body {
 }
 
 .hover-lift {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .hover-lift:hover {

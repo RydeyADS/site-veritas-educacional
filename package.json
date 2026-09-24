@@ -1,5 +1,5 @@
 {
-  "name": "faculdade-nova-aurora",
+  "name": "veritas-educacional",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "lint": "eslint .",
+    "format": "prettier --write .",
     "demo": "node tools/build-demo.mjs",
     "demo:serve": "vite preview --outDir demo"
   },
@@ -18,6 +20,10 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-vue": "^9.33.0",
+    "prettier": "^3.9.9",
     "vite": "^6.0.7",
     "vite-plugin-vuetify": "^2.0.4"
   }

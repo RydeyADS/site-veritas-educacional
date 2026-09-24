@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue'
 
-const CHAVE = 'kairos-cookie-consent'
+const CHAVE = 'veritas-cookie-consent'
 
 function lerArmazenado() {
   try {
@@ -42,6 +42,6 @@ export function useCookieConsent() {
       }
       decisao.value = null
       bannerAberto.value = true
-    }
+    },
   }
 }
