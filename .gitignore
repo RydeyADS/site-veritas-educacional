@@ -1,0 +1,12 @@
+node_modules
+dist
+dist-ssr
+# demo gerada em arquivo único (npm run demo)
+/demo
+# scripts locais de verificação (harness de QA)
+/scripts
+*.local
+.DS_Store
+.env
+.env.*
+!.env.example
