@@ -1,5 +1,4 @@
 node_modules
-dist
 dist-ssr
 # demo gerada em arquivo único (npm run demo)
 /demo
